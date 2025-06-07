@@ -7,7 +7,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ListaTareas {
     private final Map<Long, List<Tarea>> tareasPorUsuario = new ConcurrentHashMap<>();
-    private Long secuenciaId = 1L;
 
     public void agregarTarea(Long usuarioId, Tarea tarea) {
         tareasPorUsuario.computeIfAbsent(usuarioId, k -> new ArrayList<>()).add(tarea);
@@ -17,14 +16,14 @@ public class ListaTareas {
         return tareasPorUsuario.getOrDefault(usuarioId, new ArrayList<>());
     }
 
-    public boolean eliminarTarea(Long usuarioId, Long tareaId) {
+    public boolean eliminarTarea(Long usuarioId, String tareaId) {
         List<Tarea> tareas = tareasPorUsuario.get(usuarioId);
         if (tareas != null) {
             return tareas.removeIf(t -> t.getId().equals(tareaId));
         }
         return false;
     }
-    public boolean editarTarea(Long usuarioId, Long tareaId, Tarea nuevatarea) {
+    public boolean editarTarea(Long usuarioId, String tareaId, Tarea nuevatarea) {
         List<Tarea> tareas = tareasPorUsuario.get(usuarioId);
         if (tareas != null) {
             for (int i = 0; i < tareas.size(); i++) {
@@ -37,7 +36,7 @@ public class ListaTareas {
         return false;
     }
 
-    public boolean completarTarea(Long usuarioId, Long tareaId) {
+    public boolean completarTarea(Long usuarioId, String tareaId) {
         List<Tarea> tareas = tareasPorUsuario.get(usuarioId);
         if (tareas != null) {
             for (Tarea tarea : tareas) {

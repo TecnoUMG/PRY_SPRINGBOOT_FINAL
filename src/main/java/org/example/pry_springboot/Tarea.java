@@ -1,20 +1,15 @@
 package org.example.pry_springboot;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
-@Entity
+
 @Document(collection = "tareas")
 public class Tarea {
     @Id
-    @GeneratedValue
   private String id;
-
     private String titulo;
     private String descripcion;
     private String prioridad;

@@ -29,7 +29,7 @@ public class TareaController {
 
     // Eliminar tarea
     @DeleteMapping("/{usuarioId}/{tareaId}")
-    public void eliminarTarea(@PathVariable Long usuarioId, @PathVariable Long tareaId) {
+    public void eliminarTarea(@PathVariable Long usuarioId, @PathVariable String  tareaId) {
         tareaService.eliminarTarea(usuarioId, tareaId);
     }
 
@@ -37,10 +37,10 @@ public class TareaController {
     @PutMapping("/{usuarioId}/{tareaId}")
     public ResponseEntity<String> editarTarea(
             @PathVariable Long usuarioId,
-            @PathVariable Long tareaId,
+            @PathVariable String tareaId,
             @RequestBody Tarea tareaActualizada) {
 
-        boolean editada = tareaService.editarTarea(usuarioId, tareaId, tareaActualizada);
+        boolean editada = tareaService.editarTarea(usuarioId,  tareaId, tareaActualizada);
         if (editada) {
             return ResponseEntity.ok("Tarea editada correctamente.");
         } else {
@@ -52,7 +52,7 @@ public class TareaController {
     @PatchMapping("/{usuarioId}/{tareaId}/completar")
     public ResponseEntity<String> completarTarea(
             @PathVariable Long usuarioId,
-            @PathVariable Long tareaId) {
+            @PathVariable String tareaId) {
 
         boolean completada = tareaService.completarTarea(usuarioId, tareaId);
         if (completada) {

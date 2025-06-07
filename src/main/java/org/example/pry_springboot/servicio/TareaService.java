@@ -37,9 +37,10 @@ public class TareaService {
     }
 
     // Eliminar tarea
-    public boolean eliminarTarea(Long usuarioId, Long tareaId) {
-        boolean eliminado = listaTareas.eliminarTarea(usuarioId, tareaId);
+    public boolean eliminarTarea(Long usuarioId, String tareaId) {
+        boolean eliminado = listaTareas.eliminarTarea(usuarioId,tareaId);
         if (eliminado) {
+            tareaMongoRepository.deleteById(tareaId);
             historialService.registrarAccion(usuarioId, "Tarea eliminada: ID " + tareaId);
         }
         return eliminado;
@@ -47,7 +48,7 @@ public class TareaService {
     }
 
     // Editar tarea
-    public boolean editarTarea(Long usuarioId, Long tareaId, Tarea nuevaTarea) {
+    public boolean editarTarea(Long usuarioId, String tareaId, Tarea nuevaTarea) {
         List<Tarea> tareas = listaTareas.obtenerTareas(usuarioId);
         for (Tarea tarea : tareas) {
             if (tarea.getId().equals(tareaId)) {
@@ -58,6 +59,7 @@ public class TareaService {
                 tarea.setEstado(nuevaTarea.getEstado());
                 tarea.setFechaProgramada(nuevaTarea.getFechaProgramada());
 
+                tareaMongoRepository.save(tarea);
                 historialService.registrarAccion(usuarioId, "Tarea modificada: ID" + tareaId);
                 return true;
             }
@@ -66,12 +68,13 @@ public class TareaService {
     }
 
     // Marcar como completada
-    public boolean completarTarea(Long usuarioId, Long tareaId) {
+    public boolean completarTarea(Long usuarioId, String tareaId) {
         List<Tarea> tareas = listaTareas.obtenerTareas(usuarioId);
         for (Tarea tarea : tareas) {
             if (tarea.getId().equals(tareaId)) {
                 tarea.setEstado("completada");
                 tareaProducer.enviarTareaCompletada(tarea);
+                tareaMongoRepository.save(tarea);
                 historialService.registrarAccion(usuarioId, "Tarea completada: ID " + tareaId);
                 return true;
             }

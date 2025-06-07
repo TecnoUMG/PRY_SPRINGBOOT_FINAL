@@ -4,7 +4,7 @@ import org.example.pry_springboot.Historial;
 
 import java.util.*;
 
-public class PilaAcciones {
+public class Acciones {
     private final Map<Long, Stack<Historial>> accionesPorUsuario = new HashMap<>();
 
     public void registrarAccion(Long usuarioId, Historial historial) {

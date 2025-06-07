@@ -16,7 +16,7 @@ public class ColaTareasProgramadas {
     public Tarea obtenerSiguienteTarea(Long usuarioId) {
         PriorityQueue<Tarea> cola = colaPorUsuario.get(usuarioId);
         if (cola != null && !cola.isEmpty()) {
-            return cola.peek(); // solo consulta, no elimina
+            return cola.peek();
         }
         return null;
     }
@@ -24,7 +24,7 @@ public class ColaTareasProgramadas {
     public Tarea ejecutarSiguienteTarea(Long usuarioId) {
         PriorityQueue<Tarea> cola = colaPorUsuario.get(usuarioId);
         if (cola != null && !cola.isEmpty()) {
-            return cola.poll(); // consulta y elimina
+            return cola.poll();
         }
         return null;
     }
